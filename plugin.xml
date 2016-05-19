@@ -14,21 +14,10 @@
             </feature>
         </config-file>
         
-         <config-file target="*-Info.plist" parent="UISupportedExternalAccessoryProtocols">
-<key>UISupportedExternalAccessoryProtocols</key>
-<array>
-    <string>com.socketmobile.chs</string>
-</array>
-</config-file>
-        
         
         <header-file src="src/ios/SocketCDV.h" />
         <source-file src="src/ios/SocketCDV.m" />
         
-        
-        <framework src="ExternalAccessory.framework" />
-        <framework src="AudioToolbox.framework" />
-        <framework src="AVFoundation.framework" />
         
     </platform>
 </plugin>
