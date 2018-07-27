@@ -3,6 +3,7 @@
 #import "SocketCDV.h"
 #import "ScanApiHelper.h"
 #import "MainViewController.h"
+#import <WebKit/WebKit.h>
 
 
 @interface SocketCDV ()
@@ -60,19 +61,43 @@
     }
 }
 
+- (void) evaluateJavaScript:(NSString *)script
+          completionHandler:(void (^ _Nullable)(NSString * _Nullable response, NSError * _Nullable error))completionHandler {
+    
+    if ([self.webView isKindOfClass:UIWebView.class]) {
+        UIWebView *webview = (UIWebView*)self.webView;
+        NSString *response = [webview stringByEvaluatingJavaScriptFromString:script];
+        if (completionHandler) completionHandler(response, nil);
+    }
+    
+    else if ([self.webView isKindOfClass:WKWebView.class]) {
+        WKWebView *webview = (WKWebView*)self.webView;
+        [webview evaluateJavaScript:script completionHandler:^(id result, NSError *error) {
+            if (completionHandler) {
+                if (error) completionHandler(nil, error);
+                else completionHandler([NSString stringWithFormat:@"%@", result], nil);
+            }
+        }];
+    }
+    
+}
+
 - (void)sendBarcodeData:(NSString *)data type:(NSString *) type {
     
     NSLog(@"%@({ message: '%@' });", self.barcodeData, data);
+    NSLog(@"%@({ type: '%@' });", self.barcodeData, type);
     
     // Strip any newline characters
     data = [[data componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@""];
     
     NSString *jsStatement = [NSString stringWithFormat:@"SocketCDV.onBarcodeData('%@', '%@');",data, type ];
     
-    if ([self.webView isKindOfClass:[UIWebView class]]) {
-        [(UIWebView*)self.webView stringByEvaluatingJavaScriptFromString:jsStatement];
-    }
-    
+    [self evaluateJavaScript:jsStatement
+           completionHandler:^(NSString * _Nullable response, NSError * _Nullable error) {
+               if (response) {
+                   NSLog(@"Response");
+               }
+           }];
     
 }
 
