@@ -1,0 +1,23 @@
+{
+  "name": "socketcdv",
+  "version": "1.0.0",
+  "description": "Cordova plugin for Socket Mobile Devices  ======================== Inspiration from https://github.com/ttatarinov/lineapro-phonegap-plugin",
+  "main": "index.js",
+  "dependencies": {
+    "plugman": "^3.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulslugocki/SocketCDV.git"
+  },
+  "author": "TourCMS <support@tourcms.com> (http://www.tourcms.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paulslugocki/SocketCDV/issues"
+  },
+  "homepage": "https://github.com/paulslugocki/SocketCDV#readme"
+}
